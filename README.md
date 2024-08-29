@@ -8,9 +8,7 @@
 
 ## Description
  
-This project was developed based on a NestJS course up to module 8.
-
-This code is an application with MongoDB and the mongoose library for a user authentication system, allowing user registration, login and listing of registered users.
+This project was developed based on a NestJS course up to module 9.
 
 Link from the course: https://www.udemy.com/course/nestjs-do-zero/ 
 
