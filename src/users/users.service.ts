@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
+import { NotFoundError } from 'src/common/errors/types/NotFoundError';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserEntity } from './entities/user.entity';
+import { UsersRepository } from './repositories/users.repository';
 
 @Injectable()
 export class UsersService {
+  constructor(private readonly repository: UsersRepository) {}
+
   create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+    return this.repository.create(createUserDto);
   }
 
   findAll() {
-    return `This action returns all users`;
+    //throw new UnauthorizedError('Nao autorizado.');
+    return this.repository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<UserEntity> {
+    const user = await this.repository.findOne(id);
+
+    if (!user) {
+      throw new NotFoundError('User not found.');
+    }
+
+    return user;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return this.repository.update(id, updateUserDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.repository.remove(id);
   }
 }
